@@ -7,6 +7,10 @@
 ## 1. Instalación de Dependencias y Entorno
 
 ```bash
+#Instalar NODE
+https://nodejs.org/es/download
+#Instalar npm
+npm install -g npm
 # Crear proyecto React + TypeScript
 npm create vite@latest frontend -- --template react-ts
 cd frontend
