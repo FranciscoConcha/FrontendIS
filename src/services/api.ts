@@ -25,7 +25,7 @@ class ApiService {
 
     //Configuración basica para interaciar entre el token resivido y guardarlo en el encabezado del token
     this.api.interceptors.request.use(
-        (config) => {
+        (config) => {   
             const token = Cookies.get('token');
             if (token) {
             config.headers.Authorization = `Bearer ${token}`;

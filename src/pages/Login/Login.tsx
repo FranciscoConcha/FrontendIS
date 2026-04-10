@@ -1,82 +1,71 @@
 import { useState } from 'react';
-import {LoginSerivces} from '../../services/Login';
-import './Login.css';
-//Función principal donde se ejecutara el código de JS y React
+import FormReactive, { type FormConfig, type FormField } from '../../components/FormReactive';
+import { LoginSerivces } from '../../services/Login';
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
-  // Estados para el formulario
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [cargando, setCargando] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // Manejar envío del formulario
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    setCargando(true);
-    setError(null);
+  const fields: FormField[] = [
+    {
+      name: 'email',
+      type: 'email', 
+      label: 'Email',
+      placeholder: 'estudiante@ucn.cl',
+      required: true,
+      validation: (value: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.cl+$/;
+        return emailRegex.test(value) ? null : 'Email inválido';
+      }
+    },
+    {
+      name: 'password',
+      type: 'password',
+      label: 'Contraseña',
+      placeholder: 'Tu contraseña',
+      required: true,
+      validation: (value) => {
+        return value.length >= 6 ? null : 'La contraseña debe tener al menos 6 caracteres';
+      }
+    }
+  ];
+
+  const handleSubmit = async (formData: Record<string, string>) => {
     try {
-      // Llamar al servicio de login
-      const data = await LoginSerivces.login(email, password);
-      console.log('Login exitoso:', data);
+      setIsLoading(true);
+      setErrorMessage(null);
 
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido');
-      console.error('Error en login:', err);
+      const response = await LoginSerivces.login(formData.email, formData.password);
+
+      if (response.success && response.data?.token) {
+        
+        console.log('Login exitoso');
+        navigate('/home'); 
+      } else {
+        setErrorMessage(response.message || 'Error al iniciar sesión');
+      }
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Error de conexión'
+      );
     } finally {
-      setCargando(false);
+      setIsLoading(false);
     }
   };
 
-  return (
-    <div className="login-container">
-      <div className="login-box">
-        <h1>Divine teatro</h1>
-        <h2>Iniciar Sesión</h2>
+  const formConfig: FormConfig = {
+    title: 'Divine Teatro',
+    subtitle: 'Iniciar Sesión',
+    fields,
+    submitText: 'Ingresar',
+    onSubmit: handleSubmit,
+    errorMessage,
+    isLoading
+  };
 
-        {error && <div className="error-message">{error}</div>}
-
-        {/* Formulario HTML básico */}
-        <form onSubmit={handleSubmit}>
-          {/* Campo Email */}
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="estudiante@ucn.cl"
-              required
-            />
-          </div>
-
-          {/* Campo Contraseña */}
-          <div className="form-group">
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Tu contraseña"
-              required
-            />
-          </div>
-
-          {/* Botón Submit */}
-          <button 
-            type="submit" 
-            disabled={cargando}
-            className="btn-submit"
-          >
-            {cargando ? 'Iniciando sesión...' : 'Ingresar'}
-          </button>
-        </form>
-
-        
-      </div>
-    </div>
-  );
+  return <FormReactive {...formConfig} />;
 }
 
 export default Login;

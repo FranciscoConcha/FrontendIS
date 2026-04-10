@@ -5,6 +5,7 @@ export interface loginData {
 }
 
 export interface LoginResponse {
+    success: boolean,
     message: string,
     data: loginData |null
 }
