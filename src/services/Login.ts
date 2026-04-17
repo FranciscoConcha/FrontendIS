@@ -9,7 +9,7 @@ export const LoginSerivces={
     // Datos a enviar ↓
     login: async (Email: string, Password: string): Promise<LoginResponse> => {
         try{
-            console.log("URL ",API_CONFIG.BASE_URL+" url " + API_CONFIG.ENDPOINTS.AUTH.LOGIN);
+            console.log("URL ",API_CONFIG.BASE_URL+" url:" + API_CONFIG.ENDPOINTS.AUTH.LOGIN);
             console.log("Enviando datos:", { email: Email, password: Password });
             // ↓ espera una resuesta a la solicitud de los datos.
             const response = await api.post<LoginResponse>(

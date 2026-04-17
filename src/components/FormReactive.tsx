@@ -66,7 +66,7 @@ export default function FormReactive({
             // Validación por tipo
             if (value) {
                 if (field.type === 'email') {
-                    const emailRegex = /^ [^\s@]+ @ [^\s@] + \. [^\s@]+ $/;
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.cl$/;
                     if (!emailRegex.test(value)) {
                         errors[field.name] = 'Email inválido';
                     }
