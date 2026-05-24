@@ -216,3 +216,55 @@ npm run type-check   # Verificar tipos TypeScript
 ---
 
 **¡Éxito! Si tienes dudas, revisa los archivos de referencia rápida.**
+
+## 1 Ayudantía Grabada
+
+### 1.1 Actualizar config de llamadas de backend
+La ubicación del archivo correspondiente es:
+**Ubicación:** `src/config/config.tsx`
+El contenido del archivo es:
+```typescript
+export const API_CONFIG = {
+  BASE_URL: import.meta.env.VITE_API_URL || "http://localhost:3000/api/",
+  
+  ENDPOINTS: {
+    AUTH: {
+      LOGIN: 'auth/'
+    },
+    
+    FUNTION: {
+      CREATE: 'Funtion/',
+    },
+    
+    RESERVATION: {
+      CREATE: 'Reservation/',
+    }
+  },
+};
+```
+### 1.2 Crear interfaces.
+Se deben de crear las interfaces correspondientes a los dtos realizados en el backend, como se muestra en el siguiente archivo
+**Ubicación:** `src/admin/Interfaces/Reservation.ts`
+
+### 1.3 Crearemos la carpeta de elementos constantes.
+Crearemos este archivo para no tener que realizar los mismo cambios en diferentes archivos, centralizando dichos elementos, en está ocación ocuparemos lo ubicaremos en 
+**Ubicación:** `src/admin/constants/Reservation.ts`
+Verificar dicho archivo para ver su uso.
+
+### 1.4 Crear Servicios Correspondientes:
+Realizar la implementación de las llamas del backend en los servicios correspondiente, la ubicación es:
+**Ubicación:** `src/admin/services/Reservation.ts`
+
+### 1.5 Crear Componente para la visualización de las reservas.
+Revisar la ubicación de los componentes en:
+**Ubicación:** `src/admin/components/Seats/`
+
+### 1.6 Crear Página para unificar componentes
+Revisar la ubicación de la página en:
+
+**Ubicación:** `src/admin/Pages/Reservation/`
+
+### 1.6 Direccionar la página en al app.tsx
+Revisar la ubicación de la dirección en:
+
+**Ubicación:** `src/app.tsx`

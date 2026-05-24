@@ -5,5 +5,12 @@ export const API_CONFIG ={
     {
       LOGIN: 'auth/'
     },
+    FUNTION:
+    {
+      CREATE: 'Funtion/',
+    },
+    RESERVATION:{
+      CREATE: 'Reservation/'
+    }
   },
 };

@@ -3,7 +3,7 @@ import './FormReactive.css';
 
 export interface FormField {
   name: string;
-  type: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date' | 'textarea'; //Agrega cualquier otro tipo que necesites;
+  type: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date' | 'textarea' |'file'; //Agrega cualquier otro tipo que necesites;
   label: string;
   placeholder?: string;
   required?: boolean;

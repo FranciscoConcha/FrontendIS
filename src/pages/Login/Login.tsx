@@ -42,7 +42,7 @@ function Login() {
       if (response.success && response.data?.token) {
         
         console.log('Login exitoso');
-        navigate('/home'); 
+        navigate('/CreateFunt'); 
       } else {
         setErrorMessage(response.message || 'Error al iniciar sesión');
       }
