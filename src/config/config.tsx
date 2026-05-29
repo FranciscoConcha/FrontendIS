@@ -10,7 +10,8 @@ export const API_CONFIG ={
       CREATE: 'Funtion/',
     },
     RESERVATION:{
-      CREATE: 'Reservation/'
+      CREATE: 'Reservation/',
+      PDF_CREATE:'Reservation/'
     }
   },
 };

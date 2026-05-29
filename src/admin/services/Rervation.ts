@@ -1,4 +1,5 @@
 import { API_CONFIG } from "../../config/config";
+import type { MyReservationsResponse } from "../Interfaces/PdfDownload.type";
 import type { 
     CreateReservationResponse,
     CreateReservation
@@ -279,4 +280,55 @@ export async function GetSeats(funtionId: number) {
         data: []
         };
     }
+}
+
+export async function DownloadPdf(ReservationCode: string):Promise<void> {
+    try{
+        const token = Cookies.get('token');
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.RESERVATION.PDF_CREATE}${ReservationCode}/pdf`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            credentials: "include"
+        });
+        if(!response.ok){
+            console.error("Error downloading PDF:", response.statusText);
+            return;
+        }
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `entrada_${ReservationCode}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    }catch(error){
+        console.error("Error downloading PDF:", error);
+        
+    }
+}
+
+export async function GetMyReservations(): Promise<MyReservationsResponse> {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    return {
+        success: true,
+        message: "Reservas obtenidas correctamente",
+        data: [
+        {
+            id: 1,
+            reservationCode: "E6E1897CB665",
+            funtionTitle: "Prueba",  
+            dateFunction: "2026-06-15T19:00:00",
+            timeFunction: "19:00",
+            seatCount: 3,
+            totalPrice: 255,
+            status: 0,
+            createdAt: "2026-05-29T05:02:08",
+        },
+        ],
+    };
 }

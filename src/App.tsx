@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import CreateFuncion from './admin/Pages/CreateFuntion/CreateFuncion';
 import ReservationPage from './admin/Pages/Reservation/Reservation';
+import { DownloadReservations } from './admin/Pages/DownloadReservations/DownloadResvation';
 
 function App() {
   return(
@@ -27,6 +28,11 @@ function App() {
           </ProtectedRoute>
           }
         />
+        <Route path='/DownloadReservations' element={
+          <ProtectedRoute allowedRoles={['User', 'Admin']}>
+            <DownloadReservations/>
+          </ProtectedRoute>
+        }/>
       </Routes>
   </>)
     
